@@ -214,26 +214,20 @@
 
       work() {
         if (this.ants.length === 0) {
-          return "No ants here. did you work them to death?";
+          return "No ants here. Did you work them to death?";
         }
-        const survivingAnts = [];
-        let startingAnts = this.ants.length;
 
-        for (let i = 0; i < this.ants.length; i++) {
-          const ant = this.ants[i];
+        const startingAnts = this.ants.length;
+        this.ants.forEach(ant => {
           ant.health -= 20;
-
-          if (ant.health > 0) {
-            survivingAnts.push(ant);
+          if (ant.health <= 0) {
+            this.ants = this.ants.filter(a => a !== ant);
           }
-          else {
-            startingAnts--;
-          }
-        }
-        this.ants = survivingAnts;
+        });
 
         return `${startingAnts} ants starting work!`;
       }
+
 
       feed(name) {
         const antsToFeed = this.ants.filter(ant => ant.name === name);
